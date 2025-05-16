@@ -1,5 +1,10 @@
-export default function Header(){
+import { useMemo } from "react";
 
+export default function Header({ cart , removeItem , increase , decrease }){
+
+    // State Derivado
+    const isEmpty = useMemo( () => cart.length === 0 , [cart] )
+    const cartTotal = useMemo( () => cart.reduce( ( total , item) => total + (item.quantity * item.price) , 0 ) , [cart] )
 
     return(
 
@@ -18,7 +23,14 @@ export default function Header(){
                         <img className="img-fluid" src="./public/img/carrito.png" alt="imagen carrito" />
 
                         <div id="carrito" className="bg-white p-3">
-                            <p className="text-center">El carrito esta vacio</p>
+                            
+                            { isEmpty ? (
+
+                                    <p className="text-center">El carrito esta vacio</p>
+
+                                ) : (
+                            
+                            <>
                             <table className="w-100 table">
                                 <thead>
                                     <tr>
@@ -30,25 +42,35 @@ export default function Header(){
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+
+                        { cart.map( guitar =>(
+
+                    
+
+                                    <tr key={guitar.id} >
                                         <td>
-                                            <img className="img-fluid" src="public/img/guitarra_02.jpg" alt="imagen guitarra" />
+                                            <img 
+                                                className="img-fluid" 
+                                                src={`./public/img/${guitar.image}.jpg`} 
+                                                alt="imagen guitarra" />
                                         </td>
-                                        <td>SRV</td>
+                                        <td>{guitar.name}</td>
                                         <td className="fw-bold">
-                                                $299
+                                                {guitar.price}
                                         </td>
                                         <td className="flex align-items-start gap-4">
                                             <button
                                                 type="button"
                                                 className="btn btn-dark"
+                                                onClick={() => decrease(guitar.id)}
                                             >
                                                 -
                                             </button>
-                                                1
+                                                {guitar.quantity}
                                             <button
                                                 type="button"
                                                 className="btn btn-dark"
+                                                onClick={() => increase(guitar.id)}
                                             >
                                                 +
                                             </button>
@@ -57,16 +79,28 @@ export default function Header(){
                                             <button
                                                 className="btn btn-danger"
                                                 type="button"
+                                                onClick={()=> removeItem(guitar.id)}
                                             >
                                                 X
                                             </button>
                                         </td>
                                     </tr>
+
+                        ))}
+
                                 </tbody>
                             </table>
+                            
+                            <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal}</span></p>
+                            </>
 
-                            <p className="text-end">Total pagar: <span className="fw-bold">$899</span></p>
+                                )
+                            }
+
+                            
+
                             <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
+                            
                         </div>
                     </div>
                 </nav>

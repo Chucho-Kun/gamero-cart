@@ -8,13 +8,63 @@ import { db } from "./data/db";
 function App() {
 
   const [ data , setData ] = useState(db);
+  const [ cart , setCart ] = useState([]);
+  const MAX_ITEMS = 3;
 
+  function addToCart(item) {
 
+      const itemExists = cart.findIndex(( guitar )=> guitar.id === item.id )
+      if(itemExists >= 0){
+        if(cart[itemExists].quantity >= MAX_ITEMS) return
+        const updatedCart = [...cart]
+        updatedCart[itemExists].quantity++
+        setCart(updatedCart)
+
+      }else{
+        item.quantity = 1;
+        setCart([...cart , item])
+      }
+  
+  }
+
+  function removeItem( id ){
+    setCart( (prevCart) =>  prevCart.filter( guitar => guitar.id !== id ) )
+  }
+
+  function increase( id ){
+    const updateCart = cart.map( item => {
+      if( item.id == id && item.quantity < MAX_ITEMS ){
+        return{
+          ...item,
+          quantity: item.quantity + 1
+        }
+      }
+      return item
+    })
+    setCart(updateCart)
+  }
+  
+  function decrease( id ){
+    const updateCart = cart.map( ( item ) => {
+      if( item.id == id && item.quantity > 1){
+        return{
+          ...item,
+          quantity: item.quantity - 1
+        }
+      }
+      return item
+    })
+    setCart(updateCart)
+  }
 
   return (
     <>
-
-    <Header />
+    <Header 
+      cart={cart}
+      removeItem={removeItem}
+      increase={increase}
+      decrease={decrease}
+    />
 
     <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
@@ -24,7 +74,9 @@ function App() {
                 
                  <Guitar
                     key={guitar.id}
-                    guitar={guitar}      
+                    guitar={guitar}   
+                    setCart={setCart}   
+                    addToCart={addToCart}
                  />
 
               )) }
