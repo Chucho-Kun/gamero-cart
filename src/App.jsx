@@ -1,15 +1,25 @@
+import { useState , useEffect } from "react";
 import Header from "./components/Header";
 import Guitar from "./components/Guitar";
-import { useState , useEffect } from "react";
 import { db } from "./data/db";
 
 
 
 function App() {
 
-  const [ data , setData ] = useState(db);
-  const [ cart , setCart ] = useState([]);
+    const initialCart = () => {
+    const localStorageCart = localStorage.getItem( 'cart' )
+    return localStorageCart ? JSON.parse(localStorageCart) : []
+  }
+
+  const [ data ] = useState(db);
+  const [ cart , setCart ] = useState(initialCart);
+
   const MAX_ITEMS = 3;
+
+  useEffect(()=>{
+    localStorage.setItem( 'cart' , JSON.stringify(cart));
+  },[cart])
 
   function addToCart(item) {
 
@@ -24,46 +34,32 @@ function App() {
         item.quantity = 1;
         setCart([...cart , item])
       }
-  
   }
 
-  function removeItem( id ){
-    setCart( (prevCart) =>  prevCart.filter( guitar => guitar.id !== id ) )
-  }
+  function removeItem( id ){ setCart( (prevCart) =>  prevCart.filter( guitar => guitar.id !== id ) ) }
 
-  function increase( id ){
+  function control( id , v ){
     const updateCart = cart.map( item => {
-      if( item.id == id && item.quantity < MAX_ITEMS ){
+      if( item.id == id && (v === '+') ? item.quantity < MAX_ITEMS : item.quantity > 1 ){
         return{
           ...item,
-          quantity: item.quantity + 1
+          quantity: (v === '+') ? item.quantity + 1 : item.quantity - 1
         }
       }
       return item
     })
     setCart(updateCart)
   }
-  
-  function decrease( id ){
-    const updateCart = cart.map( ( item ) => {
-      if( item.id == id && item.quantity > 1){
-        return{
-          ...item,
-          quantity: item.quantity - 1
-        }
-      }
-      return item
-    })
-    setCart(updateCart)
-  }
+
+  function clearCart(){ setCart([]); }
 
   return (
     <>
     <Header 
       cart={cart}
       removeItem={removeItem}
-      increase={increase}
-      decrease={decrease}
+      control={control}
+      clearCart={clearCart}
     />
 
     <main className="container-xl mt-5">
