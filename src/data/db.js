@@ -1,17 +1,19 @@
 export const db = [
   {
       id: 1,
-      name: 'Lukather',
+      name: 'Cuphead para Nintendo Switch',
       image: 'guitarra_01',
-      description: 'Morbi ornare augue nisl, vel elementum dui mollis vel. Curabitur non ex id eros fermentum hendrerit.',
-      price: 299,
+      description: 'Juega como Cuphead o Mugman (en modo de un jugador o cooperativo) y cruza mundos extraños, adquiere nuevas armas, aprende poderosos supe movimientos y descubre secretos ocultos mientras procuras saldar tu deuda con el diablo
+',
+      price: 698,
   },
   {
       id: 2,
-      name: 'SRV',
+      name: 'Super Mario Party™ Jamboree',
       image: 'guitarra_02',
-      description: 'Morbi ornare augue nisl, vel elementum dui mollis vel. Curabitur non ex id eros fermentum hendrerit.',
-      price: 349,
+      description: 'Desde una carrera en un carrusel hasta jugar minigolf con los controles por movimiento, esta fiesta está repleta de más minijuegos que cualquier otro juego de Mario Party™ a la fecha. Con un total de siete divertidos tableros, podrás avanzar ...
+',
+      price: 1274,
   },
   {
       id: 3,
