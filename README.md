@@ -1,5 +1,12 @@
 # React + Vite + Javascript
 ## Migración a Nintendo Switch
+### Forma de uso en la terminal
+
+```
+cd gamero-cart
+npm install
+npm run dev
+```
 
 Actualizacion de imagenes, nombres y precios a lista de juegos Nintendo Switch
 
