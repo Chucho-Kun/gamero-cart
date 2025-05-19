@@ -1,10 +1,4 @@
-import { useMemo } from "react";
-
-export default function Header({ cart , removeItem , control , clearCart }){
-
-    // State Derivado
-    const isEmpty = useMemo( () => cart.length === 0 , [cart] )
-    const cartTotal = useMemo( () => cart.reduce( ( total , item) => total + (item.quantity * item.price) , 0 ) , [cart] )
+export default function Header({ cart , removeItem , control , clearCart , isEmpty , cartTotal }){
 
     return(
 
@@ -45,8 +39,6 @@ export default function Header({ cart , removeItem , control , clearCart }){
 
                         { cart.map( guitar =>(
 
-                    
-
                                     <tr key={guitar.id} >
                                         <td>
                                             <img 
@@ -63,16 +55,14 @@ export default function Header({ cart , removeItem , control , clearCart }){
                                                 type="button"
                                                 className="btn btn-dark"
                                                 onClick={() => control( guitar.id , '-')}
-                                            >
-                                                -
+                                            >-
                                             </button>
                                                 {guitar.quantity}
                                             <button
                                                 type="button"
                                                 className="btn btn-dark"
                                                 onClick={() => control( guitar.id , '+')}
-                                            >
-                                                +
+                                            >+
                                             </button>
                                         </td>
                                         <td>
@@ -80,8 +70,7 @@ export default function Header({ cart , removeItem , control , clearCart }){
                                                 className="btn btn-danger"
                                                 type="button"
                                                 onClick={()=> removeItem(guitar.id)}
-                                            >
-                                                X
+                                            >X
                                             </button>
                                         </td>
                                     </tr>

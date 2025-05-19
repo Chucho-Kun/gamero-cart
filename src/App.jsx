@@ -2,10 +2,9 @@ import Header from "./components/Header";
 import Guitar from "./components/Guitar";
 import { useCart } from "./hooks/useCart";
 
-
 function App() {
 
-  const  { data, cart , addToCart , removeItem , control , clearCart } = useCart();
+  const  { data, cart , addToCart , removeItem , control , clearCart , isEmpty , cartTotal } = useCart();
 
   return (
     <>
@@ -14,6 +13,8 @@ function App() {
       removeItem={removeItem}
       control={control}
       clearCart={clearCart}
+      isEmpty={isEmpty}
+      cartTotal={cartTotal}
     />
 
     <main className="container-xl mt-5">
