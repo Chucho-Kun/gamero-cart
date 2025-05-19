@@ -15,7 +15,7 @@ function App() {
   const [ data ] = useState(db);
   const [ cart , setCart ] = useState(initialCart);
 
-  const MAX_ITEMS = 3;
+  const MAX_ITEMS = 10;
 
   useEffect(()=>{
     localStorage.setItem( 'cart' , JSON.stringify(cart));
